@@ -34,7 +34,7 @@ function RenderComments({commentsArray}) {
     if (commentsArray != null) {
         const comments = commentsArray.map((comment) => {
             return (
-                <li>
+                <li key={comment.id} className="list-unstyled">
                     <p>{comment.comment}</p>
                     <p>-- {comment.author} , {getDateValue(comment.date)}</p>
                 </li>
@@ -43,9 +43,7 @@ function RenderComments({commentsArray}) {
         return (
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
-                <ul className="list-unstyled">
-                    {comments}
-                </ul>
+                {comments}                
             </div>
             
         );
