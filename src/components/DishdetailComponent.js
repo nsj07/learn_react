@@ -5,9 +5,7 @@ class Dishdetail extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
+
     }
 
     renderDish(dish) {
@@ -66,12 +64,14 @@ class Dishdetail extends Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.props.dish)}
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    {this.props.dish != null ? this.renderComments(this.props.dish.comments) : null}
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        {this.renderDish(this.props.dish)}
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        {this.props.dish != null ? this.renderComments(this.props.dish.comments) : null}
+                    </div>
                 </div>
             </div>
             
