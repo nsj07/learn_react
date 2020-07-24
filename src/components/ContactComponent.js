@@ -31,10 +31,10 @@ class Contact extends Component {
             }
         };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
+        //this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.validate = this.validate.bind(this);
+        //this.handleBlur = this.handleBlur.bind(this);
+        //this.validate = this.validate.bind(this);
     }
 
     handleInputChange(event) {
@@ -86,7 +86,7 @@ class Contact extends Component {
     }
 
     render () {
-        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
+        //const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
         return (
             <div className="container">
                 <div className="row">
