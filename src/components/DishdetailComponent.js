@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody,
     Col, Button, Row, Label, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 function RenderDish({dish}) {
     if (dish != null) {
@@ -32,7 +33,7 @@ function getDateValue (val) {
     return `${mo} ${da}, ${ye}`;
 }
 
-function RenderComments({comments}) {
+function RenderComments({ comments, addComment, dishId}) {
     if (comments != null) {
         const commentsValue = comments.map((comment) => {
             return (
@@ -46,7 +47,7 @@ function RenderComments({comments}) {
             <div>
                 <h4>Comments</h4>
                 {commentsValue}
-                <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
                 
         );
@@ -59,29 +60,57 @@ function RenderComments({comments}) {
 }
 
 const DishDetail = (props) => {
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>{props.dish.name}</h3>
+                        <hr />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderDish dish={props.dish} />
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div></div>
+        );
+    }
     
-    return (
-        <div className="container">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                </Breadcrumb>
-                <div className="col-12">
-                    <h3>{props.dish.name}</h3>
-                    <hr />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    <RenderDish dish={props.dish} />
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments} />
-                </div>
-            </div>
-        </div>
-    );    
+        
 }
 
 const required = (val) => val && val.length;
@@ -107,8 +136,7 @@ class CommentForm extends Component {
 
     handleComment(values) {
         this.toggleModal();
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
