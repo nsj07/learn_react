@@ -14,23 +14,7 @@ class Contact extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            firstname: '',
-            lastname: '',
-            telnum: '',
-            email: '',
-            agree: false,
-            contactType: 'Tel.',
-            message: '',
-            touched: {
-                firstname: false,
-                lastname: false,
-                telnum: false,
-                email: false,
-            }
-        };
-
+        
         //this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.handleBlur = this.handleBlur.bind(this);
@@ -48,8 +32,9 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
+        this.props.postFeedback(values);
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        //alert('Current State is: ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
         // event.preventDefault();
     }
